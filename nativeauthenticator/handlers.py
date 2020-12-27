@@ -38,7 +38,7 @@ class SignUpHandler(LocalBase):
             ask_email=self.authenticator.ask_email_on_signup,
             two_factor_auth=self.authenticator.allow_2fa,
         )
-        self.finish(html)
+        await self.finish(html)
 
     def get_result_message(self, user, taken):
         alert = 'alert-info'
@@ -102,7 +102,7 @@ class SignUpHandler(LocalBase):
             two_factor_auth_user=user_2fa,
             two_factor_auth_value=otp_secret,
         )
-        self.finish(html)
+        await self.finish(html)
 
 
 class AuthorizationHandler(LocalBase):
@@ -114,7 +114,7 @@ class AuthorizationHandler(LocalBase):
             ask_email=self.authenticator.ask_email_on_signup,
             users=self.db.query(UserInfo).all(),
         )
-        self.finish(html)
+        await self.finish(html)
 
 
 class ChangeAuthorizationHandler(LocalBase):
@@ -134,7 +134,7 @@ class ChangePasswordHandler(LocalBase):
             'change-password.html',
             user_name=user.name,
         )
-        self.finish(html)
+        await self.finish(html)
 
     @web.authenticated
     async def post(self):
@@ -147,7 +147,7 @@ class ChangePasswordHandler(LocalBase):
             user_name=user.name,
             result_message='Your password has been changed successfully',
         )
-        self.finish(html)
+        await self.finish(html)
 
 
 class ChangePasswordAdminHandler(LocalBase):
@@ -161,7 +161,7 @@ class ChangePasswordAdminHandler(LocalBase):
             'change-password.html',
             user_name=user_name,
         )
-        self.finish(html)
+        await self.finish(html)
 
     @admin_only
     async def post(self, user_name):
@@ -174,7 +174,7 @@ class ChangePasswordAdminHandler(LocalBase):
             user_name=user_name,
             result_message=message_template.format(user_name),
         )
-        self.finish(html)
+        await self.finish(html)
 
 
 class LoginHandler(LoginHandler, LocalBase):
